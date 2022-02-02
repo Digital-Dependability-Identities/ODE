@@ -349,8 +349,12 @@
     <eClassifiers xsi:type="ecore:EClass" name="MarkovChain" eSuperTypes="#//failureLogic/FailureModel">
       <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" upperBound="-1"
           eType="#//failureLogic/Transition" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="transitionMatrices" upperBound="-1"
+          eType="#//failureLogic/TransitionMatrix" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
           eType="#//failureLogic/State" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="initialProbability" eType="#//failureLogic/ProbDist"
+          containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="#//odeBase/BaseElement">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInitialState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -358,13 +362,27 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="failState" eType="#//failureLogic/Failure"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//odeBase/BaseElement">
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="transition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="transitionRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="transitionProbDistribution"
           eType="#//failureLogic/ProbDist" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failure" eType="#//failureLogic/Failure"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="fromStates" upperBound="-1"
           eType="#//failureLogic/State"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="toStates" upperBound="-1"
           eType="#//failureLogic/State"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TransitionMatrix" eSuperTypes="#//odeBase/BaseElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="rows" upperBound="-1"
+          eType="#//failureLogic/TransitionRowEntry" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TransitionRowEntry">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="fromState" eType="#//failureLogic/State"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="colEntries" upperBound="-1"
+          eType="#//failureLogic/TransitionColEntry" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TransitionColEntry">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="failure" eType="#//failureLogic/Failure"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="toState" eType="#//failureLogic/State"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="FMEAType">
       <eLiterals name="FMEA"/>
