@@ -380,20 +380,36 @@ package failureLogic {
 
   class MarkovChain extends FailureModel {
     val Transition[*] transitions;
+    val TransitionMatrix[*] transitionMatrices;
     val State[*] states;
+    val ProbDist[1] initialProbability;
   }
 
   class State extends odeBase.BaseElement {
     attr boolean isInitialState;
-    attr boolean isFailState;
-    ref Failure failState;
+    ref Failure[1] failState;
   }
 
   class Transition extends odeBase.BaseElement {
-    attr double transition;
-    val ProbDist transitionProbDistribution;
-    ref State[*] fromStates;
-    ref State[*] toStates;
+    attr double transitionRate;
+    val ProbDist[1] transitionProbDistribution;
+    ref Failure[1] failure;
+    ref State fromState;
+    ref State toState;
+  }
+  
+  class TransitionMatrix extends odeBase.BaseElement {
+  	val TransitionRowEntry[*] rows;
+  }
+  
+  class TransitionRowEntry {
+  	ref State fromState;
+  	val TransitionColEntry[*] colEntries;
+  }
+  
+  class TransitionColEntry {
+  	ref Failure[1] failure;
+  	ref State toState;
   }
 
   enum FMEAType {
